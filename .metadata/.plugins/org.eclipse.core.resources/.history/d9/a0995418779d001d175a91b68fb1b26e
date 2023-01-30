@@ -1,0 +1,8 @@
+package com.jspshop.domain;
+
+public class Cart extends Product{
+	// "누가" & "몇개" 정보 추가!
+	private int ea;
+	private Member member;
+	
+}

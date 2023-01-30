@@ -1,0 +1,6 @@
+package com.jspshop.util;
+
+public class MessageObject {
+	private int code;
+	private String msg;
+}

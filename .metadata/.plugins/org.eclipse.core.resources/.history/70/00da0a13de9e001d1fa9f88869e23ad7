@@ -1,0 +1,29 @@
+<%@page import="com.jspshop.util.ResponseMessage"%>
+<%@page import="com.jspshop.exception.MemberException"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@page import="com.jspshop.repository.MemberDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%!
+	MemberDAO memberDAO=new MemberDAO();
+	MybatisConfig mybatisConfig=MybatisConfig.getInstance();
+%>
+<%
+	request.setCharacterEncoding("utf-8");
+%>
+<jsp:useBean id="member"  class="com.jspshop.domain.Member"/>
+<jsp:setProperty property="*" name="member"/>
+<%
+	SqlSession sqlSession=mybatisConfig.getSqlSession();
+	memberDAO.setSqlSesison(sqlSesison);
+
+	try{
+		memberDAO.insert(member);
+		out.print(ResponseMessage.getMsgURL("등록 성공", "/"));
+	}catch(MemberException e){
+		
+	}
+	
+%>
+

@@ -1,0 +1,28 @@
+package com.jspshop.repository;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.jspshop.domain.Product;
+import com.jspshop.exception.ProductException;
+
+public class ProductDAO {
+	// 트랜잭션의 대상이 될 것이기 때문에 세션을 DAO마다 생성시키지 않고,
+	// 멤버변수로 가진다.
+	private SqlSession sqlSession;
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	public void insert(Product product) throws ProductException{
+		int result=0;
+		result=sqlSession.insert("Product.insert", product);
+		
+		// 수행 실패시 예외처리 일으키
+		if(result<1) {
+			new ProductException("상품이 등록 실패");
+		}
+		
+	}
+	
+	
+}

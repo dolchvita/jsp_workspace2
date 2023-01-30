@@ -1,0 +1,59 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="java.util.List"%>
+<%@page import="java.io.File"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%!
+	int maxSize=5*1024*1024;
+%>
+<%
+	String path=application.getRealPath("/data/");
+	
+	System.out.println(path);
+	
+	// 멀티 객체로 데이터 받기
+	DiskFileItemFactory factory=new DiskFileItemFactory();
+	
+	factory.setSizeThreshold(maxSize);
+	factory.setRepository(new File(path));
+
+	// 얘가 아마 실제 파일 업로드 객체 
+	ServletFileUpload upload=new ServletFileUpload(factory);
+	List<FileItem> itemList=upload.parseRequest(request);
+	
+	System.out.println("동작");	
+	
+	for(FileItem item:itemList){
+		
+		if(item.isFormField()){		//바이너리 파일을 제외한 Context들 
+			if(item.getFieldName().equals("category_idx")){
+				System.out.println(item.getString("utf-8"));
+			}else if(item.getFieldName().equals("product_name")){
+				System.out.println(item.getString("utf-8"));				
+			}else if(item.getFieldName().equals("brand")){
+				System.out.println(item.getString("utf-8"));
+			}else if(item.getFieldName().equals("price")){
+				System.out.println(item.getString("utf-8"));				
+			}else if(item.getFieldName().equals("discount")){
+				System.out.println(item.getString("utf-8"));	
+			}else if(item.getFieldName().equals("detail")){
+				System.out.println(item.getString("utf-8"));	
+			}else if(item.getFieldName().equals("size[]")){
+				
+				// 여기서 새로운 배열을 만들어야지 
+				String[] sizeList=item.getString("utf-8").split(",");
+				for(String size:sizeList){
+					String size=sizeList.get(i);
+					sizeList.push(size);
+				}
+			}
+		
+		
+		}else{
+				
+		}
+	}
+%>

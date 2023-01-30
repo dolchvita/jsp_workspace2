@@ -1,0 +1,23 @@
+package com.jspshop.repository;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.jspshop.domain.Color;
+import com.jspshop.domain.Psize;
+import com.jspshop.exception.ColorException;
+
+public class PimgDAO {
+	SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	public void insert(Psize psize) throws ColorException{
+		int result=sqlSession.insert("Psize.insert", psize);
+		if(result<1) {
+			throw new ColorException("사이즈 입력 실패");
+		}
+	}
+	
+}

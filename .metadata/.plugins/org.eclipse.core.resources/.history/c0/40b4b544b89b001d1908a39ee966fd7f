@@ -1,0 +1,163 @@
+<%@page import="com.jspshop.util.MessageObject"%>
+<%@page import="com.jspshop.exception.ProductException"%>
+<%@page import="com.jspshop.repository.ColorDAO"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@page import="com.jspshop.repository.ProductDAO"%>
+<%@page import="com.jspshop.domain.Pimg"%>
+<%@page import="com.jspshop.util.FileManager"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.jspshop.domain.Color"%>
+<%@page import="com.jspshop.domain.Psize"%>
+<%@page import="com.jspshop.domain.Category"%>
+<%@page import="com.jspshop.domain.Product"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="java.util.List"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="java.io.File"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%!
+	MybatisConfig mybatisConfig=MybatisConfig.getInstance();
+	ProductDAO productDAO=new ProductDAO();
+	ColorDAO colorDAO=new ColorDAO();
+	// DAO는 언제 호출할까? --> DB 작업이기 때문에 쿼리문 시행 전에 하면 됨!
+	
+	int maxSize=5*1024*1024;
+%>
+<%
+	
+	// application 객체는 서비스 메서드 안에서 수행되는 내장객체!
+	String path=application.getRealPath("/data/");
+	System.out.println(path);
+	DiskFileItemFactory factory=new DiskFileItemFactory();
+	
+	factory.setSizeThreshold(maxSize);
+	factory.setRepository(new File(path));
+	
+	ServletFileUpload upload=new ServletFileUpload(factory);
+	List<FileItem> itemList=upload.parseRequest(request);
+
+	Category category=new Category();
+	Product product=new Product();
+
+	// psize와 color 의 생성 시점은?
+	/* 얘네는 등록시 하나의 DTO를 생성하는 게 아니라, 선택한 체크박스만큼 
+		DTO들이 생성되어 하나의 Product가 가진 List 안에 채워져야 한다!
+		따라서, 각각 생성된 DTO들을 담을 리스트를 하나 명시하고 Product의 멤벼변수로 엮는다
+	*/
+	List<Psize> psizeList=new ArrayList<Psize>();
+	List<Color> colorList=new ArrayList<Color>();
+	List<Pimg> pimgList=new ArrayList<Pimg>();
+	product.setPsizeList(psizeList);
+	product.setColorList(colorList);
+	product.setPimgList(pimgList);
+	
+	SqlSession sqlSession=mybatisConfig.getSqlSession();
+	
+	for(FileItem item:itemList){
+		if(item.isFormField()){
+			
+			if(item.getFieldName().equals("category_idx")){
+				category.setCategory_idx(Integer.parseInt(item.getString("utf-8")));
+				product.setCategory(category);
+				
+			}else if(item.getFieldName().equals("product_name")){
+				product.setProduct_name(item.getString("utf-8"));
+				
+			}else if(item.getFieldName().equals("brand")){
+				product.setBrand(item.getString("utf-8"));
+				
+			}else if(item.getFieldName().equals("price")){
+				product.setPrice(Integer.parseInt(item.getString("utf-8")));
+				
+			}else if(item.getFieldName().equals("discount")){
+				product.setDiscount(Integer.parseInt(item.getString("utf-8")));
+			
+			}else if(item.getFieldName().equals("size[]")){
+				String[] strList=item.getString("utf-8").split(",");
+				
+				for(String str:strList){
+					// 배열 개수만큼 DTO 생성하기!
+					Psize psize=new Psize();
+					//psize.setProduct(product);
+					psize.setPsize_name(str);
+					
+					// 생성된 DTO들이 보관될 수 있게 하자!
+					psizeList.add(psize);
+				}
+				
+			}else if(item.getFieldName().equals("color[]")){
+				String[] strList=item.getString("utf-8").split(",");
+				colorDAO.setSqlSession(sqlSession);
+				
+				for(String str:strList){
+					// 배열 개수만큼 DTO 생성하기!
+					Color color=new Color();
+					color.setProduct(product);
+					color.setColor_name(str);
+					
+					colorDAO.insert(color);
+					// 생성된 DTO들이 보관될 수 있게 하자!
+					colorList.add(color);
+				}
+				
+			}else if(item.getFieldName().equals("detail")){
+				product.setDetail(item.getString("utf-8"));	
+			}
+			
+		}else{		// 파일 업로드라면!
+			// 파일 이름을 지정해서 write()하자!
+			long time=System.currentTimeMillis();
+		
+			// 파일의 이름 가져오기 getName()
+			String ext=FileManager.getExt(item.getName());
+			String filename=time+"."+ext;
+			item.write(new File(path+filename));
+			
+			// DTO 세팅!
+			Pimg pimg=new Pimg();
+			pimg.setFilename(filename);
+			pimgList.add(pimg);	
+		}
+	}
+	
+	System.out.println(product.getPsizeList());
+	System.out.println(product.getColorList());
+	System.out.println(product.getPimgList());
+	
+	
+	MessageObject messageObject=new MessageObject();		// 3 결과값을 전달할 객체
+	// 뭘 어떻게 전달할 건데?
+			
+	try{
+		productDAO.setSqlSession(sqlSession);
+		// 1-1) 이 메서드 호출시 강요되지 않은 예외가 걸려있다! -- try 문 수행하기 
+		productDAO.insert(product);
+		
+				
+		// -- 세부업무 시작! --
+		
+		/* 뽀인트 2 insert시 들어가게 될 컬러 DTO들은 어디서 꺼내온다?
+		 	Product의 멤버변수 List에 담겨 있다!
+		 	여기서 중요한 사실은 모두 트랜잭션으로 묶여 있기 때문에 "예외처리"가 걸려있다는 것 */
+		colorDAO.setSqlSession(sqlSession);
+		for(Color color:colorList){
+			colorDAO.insert(color);
+		}
+				
+		sqlSession.commit();
+		
+		// 3-1) 성공했다고 알려주기 
+		messageObject.setCode(1);
+		messageObject.setMsg("등록 성공 ");
+				
+	}catch(ProductException e){
+		
+		sqlSession.rollback();
+	}
+	
+	
+	
+%>

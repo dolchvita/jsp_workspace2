@@ -1,0 +1,103 @@
+create table admin(
+	admin_idx int primry key auto_increment
+	, admin_id varchar(20)
+	, admin_pass varchar(20)
+)default character set utf8;
+
+
+
+insert int category(category_name) values('상의');
+
+
+
+select table_name from user_tables;
+
+
+create table category(
+category_idx number primary key
+, category_name varchar2(30)
+);
+
+
+create sequence seq_category
+increment by 1
+start with 1;
+
+
+
+insert into category(category_idx, category_name)
+ values(seq_category.nextval, '상의');
+insert into category(category_idx, category_name)
+ values(seq_category.nextval, '하의');
+insert into category(category_idx, category_name)
+ values(seq_category.nextval, '액세서리');
+insert into category(category_idx, category_name)
+ values(seq_category.nextval, '신발');
+insert into category(category_idx, category_name)
+ values(seq_category.nextval, '가방');
+
+
+
+--
+
+
+
+create table product(
+	product_idx number primary key
+	, category_idx int
+	, product_name varchar2(30)
+	, brand varchar2(100)
+	, price number default 0
+	, discount number default 0
+	, detail clob
+	, constraint fk_category_product foreign key(category_idx) references category(category_idx)
+);
+
+create sequence seq_product
+increment by 1
+start with 1;
+
+
+
+create table color(
+	color_idx number primary key
+	, product_idx number
+	, color_name varchar2(20)
+	, constraint fk_product_color foreign key(product_idx) references product(product_idx)
+);
+
+create sequence seq_color
+increment by 1
+start with 1;
+
+
+
+create table psize(
+	psize_idx number primary key
+	, product_idx number
+	, psize_name varchar2(20)
+	, constraint fk_product_psize foreign key(product_idx) references product(product_idx)
+)
+
+create sequence seq_psize
+increment by 1
+start with 1;
+
+
+
+create table pimg(
+	pimg_idx number primary key
+	, product_idx number
+	, filename varchar2(25)
+	, constraint fk_product_pimg foreign key(product_idx) references product(product_idx)
+);
+
+create sequence seq_pimg
+increment by 1
+start with 1;
+
+
+
+
+
+

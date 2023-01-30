@@ -1,0 +1,22 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.jspshop.domain.Member"%>
+<%@page import="com.jspshop.domain.Cart"%>
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>    
+<%
+	String sid=session.getId();
+	out.println(sid);
+	
+	List<Cart> cartList=new ArrayList();
+	// DTO를 담을 리스트 선언! 
+	
+	Cart cart=new Cart();
+	cart.setEa(1);
+	
+	Member member=new Member();
+
+	
+	
+%>

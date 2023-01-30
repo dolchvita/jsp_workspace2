@@ -1,0 +1,22 @@
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@page import="com.jspshop.repository.MemberDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%!
+	MemberDAO memberDAO=new MemberDAO();
+	MybatisConfig mybatisConfig=MybatisConfig.getInstance();
+%>
+<%
+	request.setCharacterEncoding("utf-8");
+%>
+<jsp:useBean id="member"  class="com.jspshop.domain.Member"/>
+<jsp:setProperty property="*" name="member"/>
+<%
+	SqlSession sqlSession=mybatisConfig.getSqlSession();
+	memberDAO.setSqlSesison(sqlSesison);
+
+	
+	
+%>
+

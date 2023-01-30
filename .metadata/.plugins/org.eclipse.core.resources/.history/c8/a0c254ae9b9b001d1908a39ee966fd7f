@@ -1,0 +1,18 @@
+package com.jspshop.repository;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.jspshop.domain.Color;
+
+public class ColorDAO {
+	SqlSession sqlSession;
+	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	public void insert(Color color) {
+		sqlSession.insert("Color.insert", color);
+	}
+	
+}

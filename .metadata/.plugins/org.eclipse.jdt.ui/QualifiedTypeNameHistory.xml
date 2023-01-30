@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.apache.ibatis.io.Resources"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="store.domain.Category"/>
+    <fullyQualifiedTypeName name="store.mybatis.MybatisConfig"/>
+    <fullyQualifiedTypeName name="store.domain.Store"/>
+    <fullyQualifiedTypeName name="com.jspshop.domain.Product"/>
+    <fullyQualifiedTypeName name="com.jspshop.exception.ProductException"/>
+    <fullyQualifiedTypeName name="com.jspshop.domain.Color"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="com.jspshop.exception.ColorException"/>
+    <fullyQualifiedTypeName name="com.jspshop.domain.Psize"/>
+    <fullyQualifiedTypeName name="com.jspshop.domain.Pimg"/>
+    <fullyQualifiedTypeName name="com.jspshop.exception.PimgException"/>
+    <fullyQualifiedTypeName name="com.jspshop.exception.PsizeException"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="com.jspshop.domain.Member"/>
+    <fullyQualifiedTypeName name="org.apache.ibatis.session.SqlSession"/>
+    <fullyQualifiedTypeName name="com.jspshop.exception.MemberException"/>
+</qualifiedTypeNameHistroy>

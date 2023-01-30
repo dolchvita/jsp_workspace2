@@ -1,0 +1,10 @@
+INDEX VERSION 1.4+/Users/dolchvita/jsp_workspace/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+4278362408.index
+4192302112.index
+1414232783.index
+3563322279.index
+616677787.index
+4235667076.index
+1041363246.index
+2178207803.index
+2178207803.index

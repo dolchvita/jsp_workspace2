@@ -1,0 +1,90 @@
+<%@page import="com.jspshop.domain.Product"%>
+<%@page import="com.jspshop.repository.ProductDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+<%@include file="/inc/header.jsp" %>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+	<%@include file="/inc/preloder.jsp" %>
+
+    <!-- Offcanvas Menu Begin -->
+	<%@include file="/inc/main_navi.jsp" %>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+	<%@include file="/inc/header_section.jsp" %>
+    <!-- Header Section End -->
+    
+    
+    
+    <div class="container">
+    	<div calss="row ">
+
+
+			<div class="card card-danger">
+				<div class="card-header">
+					<h3 class="card-title">Different Width</h3>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-3">
+							<input type="text" class="form-control" placeholder=".col-3">
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" placeholder=".col-4">
+						</div>
+						<div class="col-5">
+							<input type="text" class="form-control" placeholder=".col-5">
+						</div>
+					</div>
+				</div>
+				<!-- /.card-body -->
+			</div>
+
+
+		</div>
+    </div>
+
+
+	
+	<!-- Instagram Begin -->
+	<%@include file="/inc/insta.jsp" %>
+	<!-- Instagram End -->
+	
+	<!-- Footer Section Begin -->
+	<%@include file="/inc/footer.jsp" %>
+	<!-- Footer Section End -->
+	
+	<!-- Search Begin -->
+	<%@include file="/inc/search.jsp" %>
+	<!-- Search End -->
+	
+	<!-- Js Plugins -->
+	<%@include file="/inc/footer_link.jsp" %>
+</body>
+<script type="text/javascript">
+ 	// 해당 카테고리의 상품 가져오기 (비동기X)
+ 	function getProductList(category_idx){	
+ 		// location의 속성은 url이 아니고 href !!!
+ 		$(location).attr("href", "/shop.jsp?category_idx="+category_idx);
+ 		
+ 	}
+ 	
+ 	function addCart(product_idx){
+ 		$.ajax({
+ 			url:"/payment/cart.jsp?product_idx="+product_idx,
+ 			type:"get",
+ 			success:function(result, status, xhr){
+ 				console.log(result);
+ 			}
+ 		});
+ 	}
+
+</script>
+</html>

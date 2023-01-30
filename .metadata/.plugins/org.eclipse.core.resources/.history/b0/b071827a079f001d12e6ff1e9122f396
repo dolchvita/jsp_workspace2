@@ -1,0 +1,27 @@
+<%@page import="com.jspshop.domain.Member"%>
+<%@page import="com.jspshop.repository.MemberDAO"%>
+<%@page import="com.jspshop.mybatis.MybatisConfig"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%!
+	MybatisConfig mybatisConfig=MybatisConfig.getInstance();
+	MemberDAO memberDAO=new MemberDAO();
+%>
+<%
+	request.setCharacterEncoding("utf-8");
+	
+	String id=request.getParameter("id");
+	String pass=request.getParameter("pass");	
+	
+	Member member=new Member();
+	member.setId(id);
+	member.setPass(pass);
+
+	Member dto=memberDAO.select(member);
+	session.setAttribute("member", dto);		// 회원 1명 담기 
+	
+	
+	
+	
+	
+%>
