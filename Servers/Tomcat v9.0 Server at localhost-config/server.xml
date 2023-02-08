@@ -40,13 +40,7 @@
   
   <Resource auth="Container" driverClassName="oracle.jdbc.driver.OracleDriver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/oracle" password="1234" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:XE" username="jsp"/>
   
-  	<Resource auth="Container" 
-  	driverClassName="com.mysql.jdbc.Driver" 
-  	maxActive="20" maxIdle="10" maxWait="3000" 
-  	name="jdbc/mysql" password="1234" 
-  	type="javax.sql.DataSource" 
-  	url="jdbc:mysql://localhost:3306/jsp?characterEncoding=utf8" 
-  	username="root"/>
+  	<Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="3000" name="jdbc/mysql" password="1234" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/jsp?characterEncoding=utf8" username="root"/>
   
   </GlobalNamingResources>
 
@@ -162,7 +156,7 @@
              Documentation at: /docs/config/valve.html
              Note: The pattern used is equivalent to using pattern="common" -->
 
-      <Context docBase="JspShop" path="/" reloadable="true" source="org.eclipse.jst.jee.server:JspShop"/></Host>
+      <Context docBase="MVCApp" path="/" reloadable="true" source="org.eclipse.jst.jee.server:MVCApp"/></Host>
     </Engine>
   </Service>
 </Server>

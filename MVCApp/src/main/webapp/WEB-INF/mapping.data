@@ -1,0 +1,23 @@
+# 서블릿이 받게 되는 모든 설정 정보를 정의하는 메모장
+# 컨트롤러 매핑
+/board/list.do=com.mvc.controller.board.ListController
+/board/regist.do=com.mvc.controller.board.RegistController
+/board/detail.do=com.mvc.controller.board.DetailController
+
+
+#사원 컨트롤러 매핑
+/emp/regist.do=com.mvc.controller.emp.RegistController
+/emp/list.do=com.mvc.controller.emp.ListController
+/emp/delete.do=com.mvc.controller.emp.DeleteController
+
+
+#보드 뷰 매핑
+/board/view/list=/board/list.jsp
+/board/view/regist=/board/list.do
+/board/view/detail=/board/detail.jsp
+
+
+# 사원 뷰 매핑
+/emp/view/regist=/emp/list.do
+/emp/view/list=/emp/list.jsp
+/emp/view/delete=/emp/list.do

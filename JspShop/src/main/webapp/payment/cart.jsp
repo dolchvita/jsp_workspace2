@@ -13,6 +13,7 @@
 	ProductDAO productDAO=new ProductDAO();
 %>
 <%
+	System.out.println("통과");
 	String sid=session.getId();
 	System.out.println(sid);
 	
@@ -49,6 +50,7 @@
 			
 	// 위에서 설정한 세션의 속성을 가져오자 
 	List sessionCartList=(List)session.getAttribute("cartList");
+
 	
 	// 이제 카트리스트를 품은 세션 리스트에 cart를 담으면 그대로 누적된다!
 	sessionCartList.add(cart);

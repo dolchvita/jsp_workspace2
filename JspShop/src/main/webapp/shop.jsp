@@ -287,11 +287,12 @@
  	
  	
  	
- 	function addCart(){
+ 	function addCart(product_idx){
 	 	<%if(session.getAttribute("member")==null){%>
 	 		alert("로그인이 필요한 서비스입니다 ");
 	 		
 	 	<%}else{%>
+			console.log("통과");
 		 	$.ajax({
 				url:"/payment/cart.jsp?product_idx="+product_idx,
 				type:"get",

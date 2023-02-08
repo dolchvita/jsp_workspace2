@@ -1,7 +1,13 @@
 
+<%@page import="com.jspshop.domain.Product"%>
+<%@page import="com.jspshop.domain.Cart"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-
+<%
+	// 이제 카트리스트 뽑아서 화면 반영하기 
+	List<Cart> cartList=(List)session.getAttribute("cartList");
+	System.out.println("카트리스트 개수 !"+cartList.size());
+%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -35,11 +41,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <%Product[] productList=null; %>
+	                            <%for(int i=0; i<cartList.size(); i++){%>
+	                            <%Cart cart=cartList.get(i);%>
+	                            <%Product product=cart.getProduct();%>
+						
                                 <tr>
                                     <td class="cart__product__item">
-                                        <img src="img/shop-cart/cp-1.jpg" alt="">
+                                        <img src="/data/"+<%=product.getPimgList().get(0).getFilename() %> alt="">
                                         <div class="cart__product__item__title">
-                                            <h6>Chain bucket bag</h6>
+                                        
+                                            <h6><%=product.getProduct_name() %></h6>
                                             <div class="rating">
                                                 <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i>
@@ -49,16 +61,16 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">$ 150.0</td>
+                                    <td class="cart__price"><%=product.getDiscount() %></td>
                                     <td class="cart__quantity">
                                         <div class="pro-qty">
                                             <input type="text" value="1">
                                         </div>
                                     </td>
-                                    <td class="cart__total">$ 300.0</td>
+                                    <td class="cart__total"><%=product.getPrice() %></td>
                                     <td class="cart__close"><span class="icon_close"></span></td>
                                 </tr>
-
+								<%}%>
 
 
                             </tbody>
